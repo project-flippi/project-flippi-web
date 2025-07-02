@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project Flippi - Register</title>
+</head>
+<body>
+  <h1>Project Flippi Tag Registration</h1>
+
+  <button onclick="connect()">Connect Wallet</button>
+  <p id="wallet">Wallet not connected</p>
+
+  <hr>
+
+  <input type="text" id="tag" placeholder="Enter your in-game tag">
+  <button onclick="signAndSend()">Sign & Register</button>
+  <p id="status"></p>
+
+  <!-- Load Ethers.js -->
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+
+  <script>
+    let walletAddress;
+
+    async function connect() {
+      if (!window.ethereum) {
+        alert("MetaMask or compatible wallet not found.");
+        return;
+      }
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+      const signer = provider.getSigner();
+      walletAddress = await signer.getAddress();
+      document.getElementById("wallet").innerText = `Connected: ${walletAddress}`;
+    }
+
+    async function signAndSend() {
+      const tag = document.getElementById("tag").value;
+      if (!walletAddress) {
+        alert("Connect your wallet first.");
+        return;
+      }
+      if (!tag) {
+        alert("Please enter your in-game tag.");
+        return;
+      }
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const message = `Registering tag ${tag} for Project Flippi`;
+
+    try {
+      const signature = await signer.signMessage(message);
+
+      // ✅ Send to backend
+      const response = await fetch("http://127.0.0.1:8000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tag,
+          wallet: walletAddress,
+          signature
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || "Registration failed");
+      }
+
+        document.getElementById("status").innerText = "Message signed successfully!";
+      } catch (err) {
+        document.getElementById("status").innerText = `Error: ${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
