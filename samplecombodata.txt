@@ -1,0 +1,22 @@
+    
+  
+
+    Timestamp: 2025-07-07 18-37-52,
+    StageID: 28,
+    Players: [{"playerIndex":0,"port":1,"characterId":27,"type":0,"startStocks":4,"characterColor":2,"teamShade":0,"handicap":9,"teamId":0,"staminaMode":false,"silentCharacter":false,"lowGravity":false,"invisible":false,"blackStockIcon":false,"metal":false,"startOnAngelPlatform":false,"rumbleEnabled":false,"cpuLevel":1,"offenseRatio":1,"defenseRatio":1,"modelScale":1,"controllerFix":"UCF","nametag":"OTTR","displayName":"","connectCode":"","userId":""},{"playerIndex":2,"port":3,"characterId":20,"type":0,"startStocks":4,"characterColor":2,"teamShade":0,"handicap":9,"teamId":0,"staminaMode":false,"silentCharacter":false,"lowGravity":false,"invisible":false,"blackStockIcon":false,"metal":false,"startOnAngelPlatform":false,"rumbleEnabled":false,"cpuLevel":1,"offenseRatio":1,"defenseRatio":1,"modelScale":1,"controllerFix":"UCF","nametag":"FLIP","displayName":"","connectCode":"","userId":""}],
+    CatcherIndex: 2,
+    StartPercent: 59.34000015258789, 
+    EndPercent: 112.6199951171875, 
+    Moves: [{"playerIndex":0,"frame":12914,"moveId":9,"hitCount":1,"damage":5.399997711181641},{"playerIndex":0,"frame":12958,"moveId":15,"hitCount":1,"damage":11.879997253417969},{"playerIndex":0,"frame":13041,"moveId":17,"hitCount":1,"damage":12},{"playerIndex":0,"frame":13167,"moveId":19,"hitCount":2,"damage":9},{"playerIndex":0,"frame":13257,"moveId":54,"hitCount":1,"damage":3.839996337890625},{"playerIndex":0,"frame":13326,"moveId":17,"hitCount":1,"damage":11.160003662109375}], 
+    DidKill: true,
+    
+  
+
+    Timestamp: 2025-07-07 20-17-50,
+    StageID: 300,
+    Players: [{"playerIndex":0,"port":1,"characterId":27,"type":0,"startStocks":4,"characterColor":1,"teamShade":0,"handicap":9,"teamId":0,"staminaMode":false,"silentCharacter":false,"lowGravity":false,"invisible":false,"blackStockIcon":false,"metal":false,"startOnAngelPlatform":false,"rumbleEnabled":false,"cpuLevel":1,"offenseRatio":1,"defenseRatio":1,"modelScale":1,"controllerFix":"UCF","nametag":"OTTR","displayName":"","connectCode":"","userId":""},{"playerIndex":2,"port":3,"characterId":20,"type":0,"startStocks":4,"characterColor":2,"teamShade":0,"handicap":9,"teamId":0,"staminaMode":false,"silentCharacter":false,"lowGravity":false,"invisible":false,"blackStockIcon":false,"metal":false,"startOnAngelPlatform":false,"rumbleEnabled":false,"cpuLevel":1,"offenseRatio":1,"defenseRatio":1,"modelScale":1,"controllerFix":"UCF","nametag":"FLIP","displayName":"","connectCode":"","userId":""}],
+    CatcherIndex: 0,
+    StartPercent: 118.44000244140625, 
+    EndPercent: 163.32000732421875, 
+    Moves: [{"playerIndex":2,"frame":10619,"moveId":17,"hitCount":1,"damage":11.8800048828125},{"playerIndex":2,"frame":10692,"moveId":11,"hitCount":1,"damage":14},{"playerIndex":2,"frame":10769,"moveId":11,"hitCount":1,"damage":1},{"playerIndex":2,"frame":10829,"moveId":11,"hitCount":1,"damage":1},{"playerIndex":2,"frame":10896,"moveId":10,"hitCount":1,"damage":17}], 
+    DidKill: true,
