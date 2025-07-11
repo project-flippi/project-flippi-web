@@ -2,6 +2,77 @@ import time
 import requests
 import json
 import re
+from web3 import Web3
+from dotenv import load_dotenv
+import os
+
+# Load secrets
+load_dotenv()
+
+PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+SENDER = Web3.to_checksum_address(os.getenv("SENDER_ADDRESS"))
+RPC_URL = os.getenv("RPC_URL")
+USDC_CONTRACT_ADDRESS = Web3.to_checksum_address(os.getenv("USDC_CONTRACT"))
+
+# USDC uses 6 decimals
+USDC_DECIMALS = 6
+
+# ERC-20 ABI (minimal for transfer only)
+ERC20_ABI = [
+    {
+        "constant": False,
+        "inputs": [
+            {"name": "_to", "type": "address"},
+            {"name": "_value", "type": "uint256"},
+        ],
+        "name": "transfer",
+        "outputs": [{"name": "", "type": "bool"}],
+        "type": "function",
+    }
+]
+
+# Setup web3
+w3 = Web3(Web3.HTTPProvider(RPC_URL))
+usdc_contract = w3.eth.contract(address=USDC_CONTRACT_ADDRESS, abi=ERC20_ABI)
+
+def send_eth(to_address, amount_eth):
+    to = Web3.to_checksum_address(to_address)
+    value = w3.to_wei(amount_eth, 'ether')
+
+    nonce = w3.eth.get_transaction_count(SENDER)
+    tx = {
+        'from': SENDER,
+        'to': to,
+        'value': value,
+        'gas': 21000,
+        'gasPrice': w3.to_wei('0.1', 'gwei'),
+        'nonce': nonce
+    }
+
+    signed = w3.eth.account.sign_transaction(tx, PRIVATE_KEY)
+    tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
+    print(f"Sent {amount_eth:.4f} ETH to {to} — tx: {tx_hash.hex()}")
+    return tx_hash.hex()
+
+def send_usdc(to_address, amount_dollars):
+    to = Web3.to_checksum_address(to_address)
+    amount = int(amount_dollars * (10 ** USDC_DECIMALS))
+
+    nonce = w3.eth.get_transaction_count(SENDER)
+    tx = usdc_contract.functions.transfer(to, amount).build_transaction({
+        'from': SENDER,
+        'nonce': nonce,
+        'gas': 100_000,
+        'gasPrice': w3.to_wei('0.1', 'gwei'),
+    })
+
+    signed_tx = w3.eth.account.sign_transaction(tx, PRIVATE_KEY)
+    tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+    print(f"Sent ${amount_dollars:.2f} USDC to {to} — tx: {tx_hash.hex()}")
+    return tx_hash.hex()
+
+
+
 
 # Store already processed lines
 processed = set()
@@ -101,7 +172,8 @@ def process_combos():
 
         if wallet_attacker:
             print(f"{ts}: {tag_attacker} → {wallet_attacker}")
-            print(f"Would send USDC: $2 to {wallet_attacker}")
+            print(f"Sending ETH: 0.001 to {wallet_attacker}")
+            send_eth(wallet_attacker, 0.001)
         else:
             print(f"[!] Wallet not found for: {tag_attacker}")
 
